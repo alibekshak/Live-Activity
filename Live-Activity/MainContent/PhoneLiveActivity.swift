@@ -22,11 +22,11 @@ struct PhoneLiveActivity: Widget {
                     Text("Some text")
                 }
             } compactLeading: {
-                // TODO: - Need to created a content
+                // TODO: Create content
             } compactTrailing: {
-                // TODO: - Need to created a content
+                // TODO: Create content
             } minimal: {
-                // TODO: - Need to created a content
+                // TODO: Create content
             }
         }
     }
