@@ -14,9 +14,16 @@ struct PhoneLiveActivity: Widget {
         ActivityConfiguration(for: PhoneActivityAttributes.self) { context in
             
         } dynamicIsland: { context in
-            DynamicIsland {
+            let phase = LiveActivityStyleEnum.effectivePhase(
+                for: context.state,
+                isStale: context.isStale
+            )
+            return DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
-                    Image(systemName: "xmark")
+                    Image(systemName: LiveActivityStyleEnum.iconName(for: phase))
+                        .font(.title3)
+                        .foregroundStyle(LiveActivityStyleEnum.tint(for: phase))
+                        .padding(.leading, 4)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
                     Text("Some text")

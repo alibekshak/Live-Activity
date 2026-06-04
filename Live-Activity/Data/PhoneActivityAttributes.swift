@@ -9,7 +9,7 @@ import Foundation
 import ActivityKit
 
 struct PhoneActivityAttributes: ActivityAttributes {
-    typealias ContentState = ActivityState
+    typealias ContentState = PhoneActivityState
     
     public var phone: String
 

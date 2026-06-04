@@ -6,7 +6,7 @@
 //
 
 import Foundation
-struct ContentState: Codable, Hashable {
+struct PhoneActivityState: Codable, Hashable {
     var phase: Phase
     var displayCode: String?
     var until: Date?
