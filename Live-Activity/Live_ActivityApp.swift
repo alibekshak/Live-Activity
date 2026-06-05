@@ -11,7 +11,7 @@ import SwiftUI
 struct Live_ActivityApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            TestLiveActivityButton()
         }
     }
 }
