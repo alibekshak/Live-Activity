@@ -56,7 +56,6 @@
 			membershipExceptions = (
 				Info.plist,
 				MainContent/ActivityStates.swift,
-				MainContent/LiveActivityBundle.swift,
 				MainContent/LiveActivityStyleEnum.swift,
 				MainContent/PhoneActivityAttributes.swift,
 				MainContent/PhoneLiveActivity.swift,
@@ -67,7 +66,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				MainContent/ActivityStates.swift,
-				MainContent/LiveActivityBundle.swift,
 				MainContent/LiveActivityStyleEnum.swift,
 				MainContent/PhoneActivityAttributes.swift,
 				MainContent/PhoneLiveActivity.swift,
