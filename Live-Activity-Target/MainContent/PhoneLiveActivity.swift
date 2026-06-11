@@ -69,11 +69,25 @@ struct PhoneLiveActivity: Widget {
                     .padding(.top, 2)
                 }
             } compactLeading: {
-                // TODO: Create content
+                Image("activityIcon")
+                    .renderingMode(.template)
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundStyle(Color(.systemGray2))
+                    .padding(2)
             } compactTrailing: {
-                // TODO: Create content
+                timer(for: context.state)
+                    .monospacedDigit()
+                    .font(.caption)
+                    .foregroundStyle(.primary)
+                    .frame(maxWidth: 40)
             } minimal: {
-                // TODO: Create content
+                Image("activityIcon")
+                    .renderingMode(.template)
+                    .resizable()
+                    .scaledToFit()
+                    .foregroundStyle(Color(.systemGray2))
+                    .padding(2)
             }
         }
     }
