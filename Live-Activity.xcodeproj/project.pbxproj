@@ -55,16 +55,13 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
-				MainContent/ActivityStates.swift,
-				MainContent/LiveActivityStyleEnum.swift,
-				MainContent/PhoneActivityAttributes.swift,
-				MainContent/PhoneLiveActivity.swift,
 			);
 			target = 186AC2ED2FD275AB00CC8E71 /* Live-Activity-TargetExtension */;
 		};
 		186AC30B2FD275FF00CC8E71 /* Exceptions for "Live-Activity-Target" folder in "Live-Activity" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				LiveActivityWidgetBundle.swift,
 				MainContent/ActivityStates.swift,
 				MainContent/LiveActivityStyleEnum.swift,
 				MainContent/PhoneActivityAttributes.swift,

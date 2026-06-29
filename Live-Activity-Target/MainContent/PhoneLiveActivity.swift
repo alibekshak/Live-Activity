@@ -9,8 +9,10 @@ import ActivityKit
 import SwiftUI
 import WidgetKit
 
-struct PhoneLiveActivity: Widget {
-    var body: some WidgetConfiguration {
+public struct PhoneLiveActivity: Widget {
+    public init() { }
+    
+    public var body: some WidgetConfiguration {
         ActivityConfiguration(for: PhoneActivityAttributes.self) { context in
             lockScreenView(context)
         } dynamicIsland: { context in
