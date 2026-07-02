@@ -15,8 +15,12 @@ public struct PhoneLiveActivity: Widget {
     public var body: some WidgetConfiguration {
         ActivityConfiguration(for: PhoneActivityAttributes.self) { context in
             lockScreenView(context)
+                .widgetURL(URL(string: "someWidgeURL"))
+                .activityBackgroundTint(Color(.systemBackground))
+                .activitySystemActionForegroundColor(.primary)
         } dynamicIsland: { context in
             dynamicIslandView(context)
+                .widgetURL(URL(string: "someWidgeURL"))
         }
     }
     
@@ -79,11 +83,11 @@ public struct PhoneLiveActivity: Widget {
                 expandedBottom(context, phase: phase)
             }
         } compactLeading: {
-            compactIcon()
+            compactIcon(for: phase)
         } compactTrailing: {
             compactTimer(for: context.state)
         } minimal: {
-            compactIcon()
+            compactIcon(for: phase)
         }
     }
     
@@ -128,12 +132,12 @@ public struct PhoneLiveActivity: Widget {
         .padding(.top, 2)
     }
     
-    private func compactIcon() -> some View {
+    private func compactIcon(for phase: Phase) -> some View {
         Image("activityIcon")
             .renderingMode(.template)
             .resizable()
             .scaledToFit()
-            .foregroundStyle(Color(.systemGray2))
+            .foregroundStyle(LiveActivityStyleEnum.tint(for: phase))
             .padding(2)
     }
     
