@@ -44,21 +44,7 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		186AC2E92FD273E000CC8E71 /* Exceptions for "Live-Activity" folder in "Live-Activity" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 188C2A782FCD2B64000514F8 /* Live-Activity */;
-		};
-		186AC3082FD275AE00CC8E71 /* Exceptions for "Live-Activity-Target" folder in "Live-Activity-TargetExtension" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Info.plist,
-			);
-			target = 186AC2ED2FD275AB00CC8E71 /* Live-Activity-TargetExtension */;
-		};
-		186AC30B2FD275FF00CC8E71 /* Exceptions for "Live-Activity-Target" folder in "Live-Activity" target */ = {
+		18D8A7952FF75C5400DDDEC9 /* Exceptions for "Live-Activity-Target" folder in "Live-Activity-TargetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				LiveActivityWidgetBundle.swift,
@@ -66,27 +52,24 @@
 				MainContent/LiveActivityStyleEnum.swift,
 				MainContent/PhoneActivityAttributes.swift,
 				MainContent/PhoneLiveActivity.swift,
+				Sources/Assets.xcassets,
 			);
-			target = 188C2A782FCD2B64000514F8 /* Live-Activity */;
+			target = 186AC2ED2FD275AB00CC8E71 /* Live-Activity-TargetExtension */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		186AC2F42FD275AC00CC8E71 /* Live-Activity-Target */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				186AC30B2FD275FF00CC8E71 /* Exceptions for "Live-Activity-Target" folder in "Live-Activity" target */,
-				186AC3082FD275AE00CC8E71 /* Exceptions for "Live-Activity-Target" folder in "Live-Activity-TargetExtension" target */,
-			);
-			path = "Live-Activity-Target";
-			sourceTree = "<group>";
-		};
 		188C2A7B2FCD2B64000514F8 /* Live-Activity */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				186AC2E92FD273E000CC8E71 /* Exceptions for "Live-Activity" folder in "Live-Activity" target */,
-			);
 			path = "Live-Activity";
+			sourceTree = "<group>";
+		};
+		18D8A7872FF75C5400DDDEC9 /* Live-Activity-Target */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				18D8A7952FF75C5400DDDEC9 /* Exceptions for "Live-Activity-Target" folder in "Live-Activity-TargetExtension" target */,
+			);
+			path = "Live-Activity-Target";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -124,9 +107,9 @@
 			isa = PBXGroup;
 			children = (
 				188C2A7B2FCD2B64000514F8 /* Live-Activity */,
-				186AC2F42FD275AC00CC8E71 /* Live-Activity-Target */,
 				186AC2EF2FD275AB00CC8E71 /* Frameworks */,
 				188C2A7A2FCD2B64000514F8 /* Products */,
+				18D8A7872FF75C5400DDDEC9 /* Live-Activity-Target */,
 			);
 			sourceTree = "<group>";
 		};
@@ -154,9 +137,6 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				186AC2F42FD275AC00CC8E71 /* Live-Activity-Target */,
-			);
 			name = "Live-Activity-TargetExtension";
 			packageProductDependencies = (
 			);
@@ -180,6 +160,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				188C2A7B2FCD2B64000514F8 /* Live-Activity */,
+				18D8A7872FF75C5400DDDEC9 /* Live-Activity-Target */,
 			);
 			name = "Live-Activity";
 			packageProductDependencies = (
