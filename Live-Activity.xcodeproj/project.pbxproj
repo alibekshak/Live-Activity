@@ -48,8 +48,8 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				LiveActivityWidgetBundle.swift,
-				MainContent/ActivityStates.swift,
-				MainContent/LiveActivityStyleEnum.swift,
+				MainContent/Auxiliary/ActivityStates.swift,
+				MainContent/Auxiliary/LiveActivityStyleEnum.swift,
 				MainContent/PhoneActivityAttributes.swift,
 				MainContent/PhoneLiveActivity.swift,
 				Sources/Assets.xcassets,
