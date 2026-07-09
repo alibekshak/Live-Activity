@@ -12,15 +12,19 @@ import WidgetKit
 public struct PhoneLiveActivity: Widget {
     public init() { }
     
+    private var widgetURL: URL? {
+        URL(string: "live-activity-URL")
+    }
+    
     public var body: some WidgetConfiguration {
         ActivityConfiguration(for: PhoneActivityAttributes.self) { context in
             lockScreenView(context)
-                .widgetURL(URL(string: "someWidgeURL"))
+                .widgetURL(widgetURL)
                 .activityBackgroundTint(Color(.systemBackground))
                 .activitySystemActionForegroundColor(.primary)
         } dynamicIsland: { context in
             dynamicIslandView(context)
-                .widgetURL(URL(string: "someWidgeURL"))
+                .widgetURL(widgetURL)
         }
     }
     
@@ -152,11 +156,8 @@ public struct PhoneLiveActivity: Widget {
     @ViewBuilder
     private func timer(for state: PhoneActivityAttributes.ContentState) -> some View {
         if let until = state.until,
-           (state.phase == .searching || state.phase == .ready),
-           until > Date() {
+           state.phase == .searching || state.phase == .ready {
             Text(timerInterval: Date()...until, countsDown: true)
-        } else {
-            EmptyView()
         }
     }
     
