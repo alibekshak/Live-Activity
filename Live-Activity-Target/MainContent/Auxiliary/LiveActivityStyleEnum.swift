@@ -12,11 +12,19 @@ enum LiveActivityStyleEnum {
         for state: PhoneActivityState,
         isStale: Bool = false,
     ) -> Phase {
-        if state.phase == .searching || state.phase == .ready {
-            if isStale { return .expired }
-            if let until = state.until, until <= Date() { return .expired }
+        guard state.phase.supportsTimer else {
+            return state.phase
         }
-        return state.phase
+        
+        guard !isStale else {
+            return .expired
+        }
+        
+        guard let until = state.until else {
+            return state.phase
+        }
+        
+        return until > Date() ? state.phase : .expired
     }
     
     static func iconName(

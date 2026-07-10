@@ -8,7 +8,7 @@
 import Foundation
 import ActivityKit
 
-struct PhoneActivityAttributes: ActivityAttributes {
+struct PhoneActivityAttributes: ActivityAttributes, Sendable {
     typealias ContentState = PhoneActivityState
     
     public var phone: String
