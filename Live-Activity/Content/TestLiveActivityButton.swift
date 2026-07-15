@@ -18,11 +18,11 @@ struct TestLiveActivityButton: View {
         VStack(spacing: 16) {
             Button("Start Activity") {
                 Task {
-                    // TODO: - Create method for starting activity
+                    await viewModel.startActivity()
                 }
             }
             .disabled(viewModel.currentActivity != nil)
-
+            
             if let activity = viewModel.currentActivity {
                 Text("Activity ID: \(activity.id)")
                     .font(.caption)
@@ -35,6 +35,12 @@ struct TestLiveActivityButton: View {
                     .font(.caption)
                     .foregroundStyle(.red)
                     .multilineTextAlignment(.center)
+                    .onAppear {
+                        Task {
+                            try await Task.sleep(for: .seconds(3))
+                            viewModel.clearError()
+                        }
+                    }
             }
         }
         .padding()
