@@ -16,18 +16,44 @@ struct TestLiveActivityButton: View {
     }
     var body: some View {
         VStack(spacing: 16) {
-            Button("Start Activity") {
+            Button {
                 Task {
                     await viewModel.startActivity()
                 }
+            } label: {
+                if viewModel.isLoading {
+                    ProgressView()
+                } else {
+                    Text("Start Activity")
+                }
             }
-            .disabled(viewModel.currentActivity != nil)
+            .buttonStyle(.bordered)
+            .disabled(viewModel.hasActiveActivity || viewModel.isLoading)
             
             if let activity = viewModel.currentActivity {
                 Text("Activity ID: \(activity.id)")
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.center)
+                
+                Button("Set Ready") {
+                    Task {
+                        await viewModel.updateActivity(to: .ready)
+                    }
+                }
+                
+                Button("Set Expired") {
+                    Task {
+                        await viewModel.updateActivity(to: .expired)
+                    }
+                }
+                
+                Button("Complete") {
+                    Task {
+                        await viewModel.endActivity()
+                    }
+                }
+                .foregroundStyle(Color.red)
             }
             
             if let errorMessage = viewModel.errorMessage {
@@ -37,7 +63,7 @@ struct TestLiveActivityButton: View {
                     .multilineTextAlignment(.center)
                     .onAppear {
                         Task {
-                            try await Task.sleep(for: .seconds(3))
+                            try await Task.sleep(for: .seconds(4))
                             viewModel.clearError()
                         }
                     }

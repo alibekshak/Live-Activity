@@ -16,6 +16,11 @@ final class ActivityButtonViewModel {
     private(set) var errorMessage: String?
     private(set) var isLoading = false
     
+    var hasActiveActivity: Bool {
+        currentActivity != nil
+    }
+    
+    
     init() {
         currentActivity = Activity<PhoneActivityAttributes>.activities.first
     }
@@ -67,6 +72,52 @@ final class ActivityButtonViewModel {
         } catch {
             errorMessage = error.localizedDescription
         }
+    }
+    
+    func updateActivity(to phase: Phase) async {
+        guard let currentActivity else {
+            errorMessage = "No active Live Activity"
+            return
+        }
+        
+        let expirationDate: Date? = phase.supportsTimer
+        ? Date().addingTimeInterval(120)
+        : nil
+        
+        let state = PhoneActivityState(
+            phase: phase,
+            displayCode: phase == .ready ? "1234" : nil,
+            until: expirationDate
+        )
+        
+        let content = ActivityContent(
+            state: state,
+            staleDate: expirationDate
+        )
+        
+        await currentActivity.update(content)
+    }
+    
+    func endActivity() async {
+        guard let currentActivity else { return }
+        
+        let finalState = PhoneActivityState(
+            phase: .completed,
+            displayCode: nil,
+            until: nil
+        )
+        
+        let finalContent = ActivityContent(
+            state: finalState,
+            staleDate: nil
+        )
+        
+        await currentActivity.end(
+            finalContent,
+            dismissalPolicy: .after(Date().addingTimeInterval(5))
+        )
+        
+        self.currentActivity = nil
     }
     
     func clearError() {
