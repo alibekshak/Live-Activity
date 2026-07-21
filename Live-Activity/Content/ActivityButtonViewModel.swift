@@ -17,14 +17,32 @@ final class ActivityButtonViewModel {
     private(set) var isLoading = false
     
     var hasActiveActivity: Bool {
-        currentActivity != nil
+        currentActivity?.activityState == .active
+    }
+    var activeActivity: Activity<PhoneActivityAttributes>? {
+        Activity<PhoneActivityAttributes>.activities.first {
+            $0.activityState == .active
+        }
     }
     
+    // MARK: - Tasks
+    
+    @ObservationIgnored
+    private var activityStateTask: Task<Void, Never>?
+    @ObservationIgnored
+    private var errorDismissTask: Task<Void, Never>?
+    
+    // MARK: - Lifecycle
     
     init() {
-        currentActivity = Activity<PhoneActivityAttributes>.activities.first
+        restoreActivity()
     }
     
+    deinit {
+        activityStateTask?.cancel()
+        errorDismissTask?.cancel()
+    }
+
     func startActivity() async {
         guard !isLoading else { return }
         
@@ -69,16 +87,24 @@ final class ActivityButtonViewModel {
                 content: content,
                 pushType: nil
             )
+            
         } catch {
             errorMessage = error.localizedDescription
         }
     }
     
     func updateActivity(to phase: Phase) async {
+        guard isLoading == false else { return }
+        
         guard let currentActivity else {
             errorMessage = "No active Live Activity"
             return
         }
+        
+        isLoading = true
+        clearError()
+        
+        defer { isLoading = false }
         
         let expirationDate: Date? = phase.supportsTimer
         ? Date().addingTimeInterval(120)
@@ -117,10 +143,68 @@ final class ActivityButtonViewModel {
             dismissalPolicy: .after(Date().addingTimeInterval(5))
         )
         
+        activityStateTask?.cancel()
+        activityStateTask = nil
+        isLoading = false
         self.currentActivity = nil
     }
     
     func clearError() {
+        errorDismissTask?.cancel()
+        errorDismissTask = nil
         errorMessage = nil
+    }
+    
+    func restoreActivity() {
+        guard let activity = activeActivity else {
+            currentActivity = nil
+            return
+        }
+        
+        setCurrentActivity(activity)
+    }
+    
+    func setCurrentActivity(
+        _ activity: Activity<PhoneActivityAttributes>
+    ) {
+        currentActivity = activity
+        observeState(of: activity)
+    }
+    
+    func observeState(
+        of activity: Activity<PhoneActivityAttributes>
+    ) {
+        activityStateTask?.cancel()
+        
+        activityStateTask = Task { [weak self] in
+            for await state in activity.activityStateUpdates {
+                guard Task.isCancelled == false else {
+                    return
+                }
+                
+                switch state {
+                case .active:
+                    break
+                    
+                case .stale:
+                    break
+                    
+                case .ended, .dismissed:
+                    guard self?.currentActivity?.id == activity.id else {
+                        return
+                    }
+                    
+                    self?.currentActivity = nil
+                    return
+                    
+                case .pending:
+                    break
+                    
+                @unknown default:
+                    self?.currentActivity = nil
+                    return
+                }
+            }
+        }
     }
 }
