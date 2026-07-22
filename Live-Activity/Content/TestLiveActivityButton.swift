@@ -16,20 +16,36 @@ struct TestLiveActivityButton: View {
     }
     var body: some View {
         VStack(spacing: 16) {
-            Button {
-                Task {
-                    await viewModel.startActivity()
-                }
-            } label: {
-                if viewModel.isLoading {
-                    ProgressView()
-                } else {
-                    Text("Start Activity")
-                }
+            buttonStartActivity
+            contentForCurentActivity
+            showErrorText
+        }
+        .padding()
+        .animation(
+            .default,
+            value: viewModel.hasActiveActivity
+        )
+    }
+    
+    
+    private var buttonStartActivity: some View {
+        Button {
+            Task {
+                await viewModel.startActivity()
             }
-            .buttonStyle(.bordered)
-            .disabled(viewModel.hasActiveActivity || viewModel.isLoading)
-            
+        } label: {
+            if viewModel.isLoading {
+                ProgressView()
+            } else {
+                Text("Start Activity")
+            }
+        }
+        .buttonStyle(.bordered)
+        .disabled(viewModel.hasActiveActivity || viewModel.isLoading)
+    }
+    
+    private var contentForCurentActivity: some View {
+        Group {
             if let activity = viewModel.currentActivity {
                 Text("Activity ID: \(activity.id)")
                     .font(.caption)
@@ -41,21 +57,27 @@ struct TestLiveActivityButton: View {
                         await viewModel.updateActivity(to: .ready)
                     }
                 }
+                .disabled(viewModel.isLoading)
                 
                 Button("Set Expired") {
                     Task {
                         await viewModel.updateActivity(to: .expired)
                     }
                 }
+                .disabled(viewModel.isLoading)
                 
-                Button("Complete") {
+                Button("Complete", role: .destructive) {
                     Task {
                         await viewModel.endActivity()
                     }
                 }
-                .foregroundStyle(Color.red)
+                .disabled(viewModel.isLoading)
             }
-            
+        }
+    }
+    
+    private var showErrorText: some View {
+        Group {
             if let errorMessage = viewModel.errorMessage {
                 Text(errorMessage)
                     .font(.caption)
@@ -69,7 +91,6 @@ struct TestLiveActivityButton: View {
                     }
             }
         }
-        .padding()
     }
 }
 

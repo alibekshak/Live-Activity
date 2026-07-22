@@ -125,7 +125,12 @@ final class ActivityButtonViewModel {
     }
     
     func endActivity() async {
+        guard isLoading == false else { return }
+        
         guard let currentActivity else { return }
+        
+        isLoading = true
+        clearError()
         
         let finalState = PhoneActivityState(
             phase: .completed,
@@ -154,7 +159,9 @@ final class ActivityButtonViewModel {
         errorDismissTask = nil
         errorMessage = nil
     }
-    
+}
+
+private extension ActivityButtonViewModel {
     func restoreActivity() {
         guard let activity = activeActivity else {
             currentActivity = nil
@@ -170,6 +177,7 @@ final class ActivityButtonViewModel {
         currentActivity = activity
         observeState(of: activity)
     }
+
     
     func observeState(
         of activity: Activity<PhoneActivityAttributes>
